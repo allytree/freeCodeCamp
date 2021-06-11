@@ -6,7 +6,7 @@ import math
 BLUE = (67,12,118)
 BLACK = (0,0,0)
 RED = (0,231,255)
-YELLOW = (255,255,0)
+YELLOW = (0,0,255)
 
 ROW_COUNT = 6
 COLUMN_COUNT = 7
@@ -58,12 +58,14 @@ def draw_board(board):
     for c in range(COLUMN_COUNT):
         for r in range(ROW_COUNT):
             pygame.draw.rect(screen, BLUE, (c*SQUARESIZE, r*SQUARESIZE+SQUARESIZE, SQUARESIZE, SQUARESIZE))
-            if board[r][c] == 0:
-                pygame.draw.circle(screen, BLACK, (c*SQUARESIZE+SQUARESIZE/2, r*SQUARESIZE+SQUARESIZE+SQUARESIZE/2), RADIUS)
-            elif board[r][c] == 1:
-                pygame.draw.circle(screen, RED, (c*SQUARESIZE+SQUARESIZE/2, r*SQUARESIZE+SQUARESIZE+SQUARESIZE/2), RADIUS)
-            else:
-                pygame.draw.circle(screen, YELLOW, (c*SQUARESIZE+SQUARESIZE/2, r*SQUARESIZE+SQUARESIZE+SQUARESIZE/2), RADIUS)
+            pygame.draw.circle(screen, BLACK, (c*SQUARESIZE+SQUARESIZE/2, r*SQUARESIZE+SQUARESIZE+SQUARESIZE/2), RADIUS)
+ 
+    for c in range(COLUMN_COUNT):
+        for r in range(ROW_COUNT):
+            if board[r][c] == 1:
+                pygame.draw.circle(screen, RED, (c*SQUARESIZE+SQUARESIZE/2, height-(r*SQUARESIZE+SQUARESIZE/2)), RADIUS)
+            elif board[r][c] == 2:
+                pygame.draw.circle(screen, YELLOW, (c*SQUARESIZE+SQUARESIZE/2, height-(r*SQUARESIZE+SQUARESIZE/2)), RADIUS)
     pygame.display.update()
 
 board = create_board()
