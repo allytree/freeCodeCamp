@@ -5,8 +5,9 @@ import math
 
 BLUE = (67,12,118)
 BLACK = (0,0,0)
-RED = (0,231,255)
+RED = (0,231,255) # player 1 colour
 YELLOW = (0,0,255)
+FONT_COLOUR = (255,255,255)
 
 ROW_COUNT = 6
 COLUMN_COUNT = 7
@@ -88,11 +89,23 @@ screen = pygame.display.set_mode(size)
 draw_board(board)
 pygame.display.update()
 
+myfont = pygame.font.SysFont("monospace", 75)
+
 while not game_over:
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             sys.exit()
+
+
+        if event.type == pygame.MOUSEMOTION:
+            pygame.draw.rect(screen, BLACK, (0,0, width, SQUARESIZE))
+            posx = event.pos[0]
+            if turn == 0:
+                pygame.draw.circle(screen, RED, (posx, SQUARESIZE/2), RADIUS)
+            else:
+                pygame.draw.circle(screen, YELLOW, (posx, SQUARESIZE/2),RADIUS)
+        pygame.display.update()
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             # print(event.pos)
@@ -106,7 +119,9 @@ while not game_over:
                     drop_piece(board, row, col, 1)
 
                     if winning_move(board, 1):
-                        print("player 1 wins!!!! Congrats!!!")
+                        label =myfont.render("Player 1 wins!!", 1, FONT_COLOUR)
+                        screen.blit(label, (40,10))
+                        # print("player 1 wins!!!! Congrats!!!")
                         game_over = True
 
             # #Ask for player 2 input
@@ -119,7 +134,9 @@ while not game_over:
                     drop_piece(board, row, col, 2)
 
                     if winning_move(board, 2):
-                        print("player 2 wins!!!! Congrats!!!")
+                        label =myfont.render("Player 2 wins!!", 2, FONT_COLOUR)
+                        screen.blit(label, (40,10))
+                        # print("player 2 wins!!!! Congrats!!!")
                         game_over = True
                         
             print_board(board)
@@ -127,3 +144,6 @@ while not game_over:
                 
             turn += 1
             turn = turn % 2
+
+            if game_over:
+                pygame.time.wait(3000)
